@@ -1,0 +1,3 @@
+magento:
+  username: 'magentoUserNameKey'
+  password: 'magentoPasswordKey'
