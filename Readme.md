@@ -1,7 +1,9 @@
 # Magento2.3.0-alpha Vagrant
 
-A simple Vagrant Magento installation on Debian Stretch to take a look on Magento 2.3 alpha<br>
-This setup is based on [article](https://store.fooman.co.nz/blog/upgrading-to-the-pre-release-of-magento-2-3-0.html) which details process to get magento 2.3.0 pre-release.
+![magento 2.3.0-alpha](https://image.noelshack.com/fichiers/2018/36/2/1536059208-selection-012.png)
+
+A simple Vagrant Magento installation on Debian Stretch to take a look on Magento 2.3.0-alpha.<br>
+Setup is based on this [article](https://store.fooman.co.nz/blog/upgrading-to-the-pre-release-of-magento-2-3-0.html) which details process to upgrade to magento pre-release.
 
 ## Requirements
 
