@@ -1,7 +1,7 @@
 # Magento2.3.0-alpha Vagrant
 
-A simple Vagrant Magento installation on Debian Stretch to take a look on magento 2.3
-This setup is based on [article](https://store.fooman.co.nz/blog/upgrading-to-the-pre-release-of-magento-2-3-0.html) which explains process to get magento 2.3.0 pre-release.
+A simple Vagrant Magento installation on Debian Stretch to take a look on Magento 2.3 alpha<br>
+This setup is based on [article](https://store.fooman.co.nz/blog/upgrading-to-the-pre-release-of-magento-2-3-0.html) which details process to get magento 2.3.0 pre-release.
 
 ## Requirements
 
@@ -10,7 +10,7 @@ This setup is based on [article](https://store.fooman.co.nz/blog/upgrading-to-th
 
 ### Configurations
 
-Copy and paste ``config.yaml.sample``, rename it ``config.yaml``.<br>
+Copy and paste ``config.yaml.sample``, rename it ``config.yaml``<br>
 Open it and set your composer credentials for ``repo.magento.com`` accessible here:<br>
 https://marketplace.magento.com/customer/accessKeys/
 
