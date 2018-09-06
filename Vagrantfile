@@ -1,12 +1,10 @@
-VAGRANTFILE_API_VERSION = "2"
-
 rootPath = File.dirname(__FILE__)
 
 config = YAML.load_file("#{rootPath}/config.yml")['magento']
 username = config['username']
 password = config['password']
 
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |conf|
+Vagrant.configure(2) do |conf|
   conf.vm.box = 'debian/stretch64'
   conf.vm.network :private_network, ip: '192.168.33.100'
   conf.vm.network :forwarded_port, guest: 22, host: 2200, auto_correct: true, id: 'ssh'
