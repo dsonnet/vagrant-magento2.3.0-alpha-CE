@@ -1,6 +1,6 @@
 rootPath = File.dirname(__FILE__)
 
-config = YAML.load_file("#{rootPath}/config.yml")['magento']
+config = YAML.load_file("#{rootPath}/config.yml")
 host_vagrant_dir = Dir.pwd + ''
 host_magento_dir = host_vagrant_dir + '/magento-ce/'
 guest_magento_dir = '/var/www/magento-ce/'
