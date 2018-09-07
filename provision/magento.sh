@@ -255,7 +255,7 @@ sudo -u vagrant php $PROJECT_DIRECTORY/bin/magento setup:install \
 # mode
 sudo -u vagrant php $PROJECT_DIRECTORY/bin/magento deploy:mode:set developer
 
-# bash alias project name
+# cli
 if [[ -z $(grep "magento" "/home/vagrant/.bashrc") ]]; then
 cat <<EOF >> /home/vagrant/.bashrc
 Shortcut to directory ${PROJECT_NAME}

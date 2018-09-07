@@ -18,11 +18,11 @@ https://marketplace.magento.com/customer/accessKeys/
 - Set edition to ``community`` (open source) or ``enterprise`` (commerce)
 - Set magento2.3.0 version ``alpha64`` 
 - Set sample to ``true`` to get sample data on your installation
-- Set mount to ``short`` to mount only /app directory (highly improve vm performance) or ``full` if you wish to share all magento directory
+- Set mount to ``short`` to mount only /app directory (highly improve vm performance) or ``full` if you wish to share all magento installation
 
 ### Project path
 
-<b>Use shortcurt ``magento`` to use bin/magento CLI.</b> This shortcut allow you to use binary as www-data user and prevent error on permissions.
+<b>Use shortcurt ``magento`` to use bin/magento CLI.</b> This shortcut allow you to use binary as www-data user and prevent error on permissions. Do not use bin/magento as vagrant user.
 
 Don't forget to add vagrant IP and host name in your /etc/hosts file or C:\WINDOWS\system32\drivers\etc\hosts:<br>
 ```
