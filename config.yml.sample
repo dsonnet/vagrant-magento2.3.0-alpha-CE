@@ -1,3 +1,7 @@
 magento:
   username: 'magentoUserNameKey'
   password: 'magentoPasswordKey'
+  edition: 'community'
+  version: 'alpha64'
+  sample: 'true'
+  mount: 'short'
