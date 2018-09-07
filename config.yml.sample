@@ -4,4 +4,4 @@ magento:
   edition: 'community'
   version: 'alpha64'
   sample: 'true'
-  mount: 'short'
+  mount: 'app'
