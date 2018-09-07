@@ -258,7 +258,7 @@ sudo -u vagrant php $PROJECT_DIRECTORY/bin/magento deploy:mode:set developer
 # cli
 if [[ -z $(grep "magento" "/home/vagrant/.bashrc") ]]; then
 cat <<EOF >> /home/vagrant/.bashrc
-Shortcut to directory ${PROJECT_NAME}
+#Shortcut to directory ${APP_NAME}
 alias magento='sudo -u www-data ${PROJECT_DIRECTORY}/bin/magento'
 EOF
 fi
