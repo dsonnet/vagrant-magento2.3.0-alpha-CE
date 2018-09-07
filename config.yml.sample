@@ -1,7 +1,6 @@
-magento:
-  username: 'magentoUserNameKey'
-  password: 'magentoPasswordKey'
-  edition: 'community'
-  version: 'alpha64'
-  sample: 'true'
-  mount: 'app'
+username: 'magentoUserNameKey'
+password: 'magentoPasswordKey'
+edition: 'community'
+version: 'alpha64'
+sample: 'true'
+mount: 'app'
