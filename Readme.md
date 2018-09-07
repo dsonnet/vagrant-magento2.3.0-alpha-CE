@@ -22,6 +22,8 @@ https://marketplace.magento.com/customer/accessKeys/
 
 ### Project path
 
+<b>Use shortcurt ``magento`` to use bin/magento CLI.</b> This shortcut allow you to use binary as www-data user and prevent error on permissions.
+
 Don't forget to add vagrant IP and host name in your /etc/hosts file or C:\WINDOWS\system32\drivers\etc\hosts:<br>
 ```
 192.168.33.100  magento-ce.com

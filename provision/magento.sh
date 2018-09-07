@@ -117,7 +117,7 @@ EOF
 a2ensite 010-$APP_NAME
 
 usermod -a -G www-data vagrant
-chown -R vagrant:www-data /var/www
+chown -R www-data:www-data /var/www/
 
 service apache2 restart
 
@@ -145,8 +145,8 @@ sed -i s/^bind\-address/\#bind\-address/ /etc/mysql/mariadb.conf.d/50-server.cnf
 echoTitle 'Installing: PHP'
 # ---------------------------------------------------------------------------------------------------------------------
 # Add repository
-sudo apt-get install -y apt-transport-https lsb-release ca-certificates
-sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+apt-get install -y apt-transport-https lsb-release ca-certificates
+wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
 apt-get update -y
 
@@ -188,41 +188,59 @@ fi
 
 
 # ---------------------------------------------------------------------------------------------------------------------
-echoTitle 'Installing: Magento CE-2.3.*'
+echoTitle 'Installing: Magento CE-2.3.0-alpha*'
 # ---------------------------------------------------------------------------------------------------------------------
-# pre-build
-rm -rf $PROJECT_DIRECTORY &> /dev/null
-rm -rf $BUILD_DIRECTORY &> /dev/null
-mkdir -p $PROJECT_DIRECTORY
-mkdir -p $BUILD_DIRECTORY
-chown -R vagrant:www-data $BUILD_DIRECTORY
-chmod -R 777 $BUILD_DIRECTORY
-chmod -R 777 $PROJECT_DIRECTORY
-
 sudo -u vagrant composer global config http-basic.repo.magento.com $COMPOSER_USERNAME $COMPOSER_PASSWORD
+
+rm -rf $PROJECT_DIRECTORY &> /dev/null
+mkdir -p $PROJECT_DIRECTORY
+chmod -R 777 $PROJECT_DIRECTORY
 
 # build
 if [ $MOUNT == "short" ]; then
-    sudo -u vagrant composer create-project --repository=https://repo.magento.com/ \
+    rm -rf $BUILD_DIRECTORY &> /dev/null
+    mkdir -p $BUILD_DIRECTORY
+    chown -R vagrant:www-data /home/vagrant/build
+    chmod -R 777 $BUILD_DIRECTORY
+    sudo -u vagrant composer create-project --no-install --no-progress --repository=https://repo.magento.com/ \
       magento/project-$EDITION-edition=2.3.0-$VERSION --stability=alpha $BUILD_DIRECTORY
-    rsync -a -p --remove-source-files $BUILD_DIRECTORY/ $PROJECT_DIRECTORY/ || true
-  else
-    sudo -u vagrant composer create-project --repository=https://repo.magento.com/ \
-      magento/project-$EDITION-edition=2.3.0-$VERSION --stability=alpha $PROJECT_DIRECTORY
-fi
+    
+    if [ $SAMPLE == "true" ]; then
+      sudo -u vagrant composer require -d $BUILD_DIRECTORY \
+        magento/module-bundle-sample-data magento/module-widget-sample-data \
+        magento/module-theme-sample-data magento/module-catalog-sample-data \
+        magento/module-customer-sample-data magento/module-cms-sample-data \
+        magento/module-catalog-rule-sample-data magento/module-sales-rule-sample-data \
+        magento/module-review-sample-data magento/module-tax-sample-data \
+        magento/module-sales-sample-data magento/module-grouped-product-sample-data \
+        magento/module-downloadable-sample-data magento/module-msrp-sample-data \
+        magento/module-configurable-sample-data magento/module-product-links-sample-data \
+        magento/module-wishlist-sample-data magento/module-swatches-sample-data \
+        magento/sample-data-media magento/module-offline-shipping-sample-data --no-update
+    fi
 
-if [ $SAMPLE == "true" ]; then
-    sudo -u vagrant composer require -d /var/www/magento-ce \
-      magento/module-bundle-sample-data magento/module-widget-sample-data \
-      magento/module-theme-sample-data magento/module-catalog-sample-data \
-      magento/module-customer-sample-data magento/module-cms-sample-data \
-      magento/module-catalog-rule-sample-data magento/module-sales-rule-sample-data \
-      magento/module-review-sample-data magento/module-tax-sample-data \
-      magento/module-sales-sample-data magento/module-grouped-product-sample-data \
-      magento/module-downloadable-sample-data magento/module-msrp-sample-data \
-      magento/module-configurable-sample-data magento/module-product-links-sample-data \
-      magento/module-wishlist-sample-data magento/module-swatches-sample-data \
-      magento/sample-data-media magento/module-offline-shipping-sample-data --no-update
+    sudo -u vagrant composer install -d $BUILD_DIRECTORY --no-progress
+    rsync -a -p --remove-source-files $BUILD_DIRECTORY/ $PROJECT_DIRECTORY/ || true
+
+  else
+    sudo -u vagrant composer create-project --no-install --no-progress --repository=https://repo.magento.com/ \
+      magento/project-$EDITION-edition=2.3.0-$VERSION --stability=alpha $PROJECT_DIRECTORY
+    
+    if [ $SAMPLE == "true" ]; then
+      sudo -u vagrant composer require -d $PROJECT_DIRECTORY \
+        magento/module-bundle-sample-data magento/module-widget-sample-data \
+        magento/module-theme-sample-data magento/module-catalog-sample-data \
+        magento/module-customer-sample-data magento/module-cms-sample-data \
+        magento/module-catalog-rule-sample-data magento/module-sales-rule-sample-data \
+        magento/module-review-sample-data magento/module-tax-sample-data \
+        magento/module-sales-sample-data magento/module-grouped-product-sample-data \
+        magento/module-downloadable-sample-data magento/module-msrp-sample-data \
+        magento/module-configurable-sample-data magento/module-product-links-sample-data \
+        magento/module-wishlist-sample-data magento/module-swatches-sample-data \
+        magento/sample-data-media magento/module-offline-shipping-sample-data --no-update
+    fi
+
+    sudo -u vagrant composer install -d $PROJECT_DIRECTORY --no-progress
 fi
 
 # setup
@@ -234,16 +252,16 @@ sudo -u vagrant php $PROJECT_DIRECTORY/bin/magento setup:install \
 --admin-user="admin" --admin-password="admin123" --language="en_US" --currency="USD" \
 --timezone="Europe/London" --use-rewrites="1" --backend-frontname="admin"
 
-# sample
-if [ $SAMPLE == "true" ]; then
-    sudo -u vagrant php $PROJECT_DIRECTORY/bin/magento sampledata:deploy
-    sudo -u vagrant php $PROJECT_DIRECTORY/bin/magento setup:upgrade
-fi
-
 # mode
 sudo -u vagrant php $PROJECT_DIRECTORY/bin/magento deploy:mode:set developer
 
-
+# bash alias project name
+if [[ -z $(grep "magento" "/home/vagrant/.bashrc") ]]; then
+cat <<EOF >> /home/vagrant/.bashrc
+Shortcut to directory ${PROJECT_NAME}
+alias magento='sudo -u www-data ${PROJECT_DIRECTORY}/bin/magento'
+EOF
+fi
 
 # ---------------------------------------------------------------------------------------------------------------------
 echoTitle 'Configuring: Redis Cache'
@@ -265,9 +283,14 @@ sudo -u vagrant php $PROJECT_DIRECTORY/bin/magento setup:config:set \
       --session-save-redis-port=6379 \
       --session-save-redis-db=2
 
+
+# apply rights
+cd $PROJECT_DIRECTORY \
+  && chmod -R 0777 . \
+  && chown -R www-data:www-data . \
+  && chmod u+x bin/magento
+
+# restart services
 service mysql restart
 service redis restart
 service apache2 restart
-
-chown -R vagrant:www-data $PROJECT_DIRECTORY
-chmod 777 -R $PROJECT_DIRECTORY
