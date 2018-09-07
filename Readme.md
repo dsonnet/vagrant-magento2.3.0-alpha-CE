@@ -16,6 +16,7 @@ Copy and paste ``config.yml.sample``, rename it ``config.yml``
 - Open it and set your composer credentials for ``repo.magento.com`` accessible here:
 https://marketplace.magento.com/customer/accessKeys/
 - Set edition to ``community`` (open source) or ``enterprise`` (commerce)
+- Set magento2.3.0 version ``alpha64`` 
 - Set sample to ``true`` to get sample data on your installation
 - Set mount to ``short`` to mount only /app directory (highly improve vm performance) or ``full` if you wish to share all magento directory
 
