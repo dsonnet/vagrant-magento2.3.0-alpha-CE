@@ -197,7 +197,7 @@ mkdir -p $PROJECT_DIRECTORY
 chmod -R 777 $PROJECT_DIRECTORY
 
 # build
-if [ $MOUNT == "short" ]; then
+if [ $MOUNT == "app" ]; then
     rm -rf /home/vagrant/build &> /dev/null
     sudo -u vagrant mkdir -p /home/vagrant/build
     chown -R vagrant:www-data /home/vagrant/build
