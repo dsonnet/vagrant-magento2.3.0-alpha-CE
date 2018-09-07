@@ -198,10 +198,10 @@ chmod -R 777 $PROJECT_DIRECTORY
 
 # build
 if [ $MOUNT == "short" ]; then
-    rm -rf $BUILD_DIRECTORY &> /dev/null
-    mkdir -p $BUILD_DIRECTORY
+    rm -rf /home/vagrant/build &> /dev/null
+    sudo -u vagrant mkdir -p /home/vagrant/build
     chown -R vagrant:www-data /home/vagrant/build
-    chmod -R 777 $BUILD_DIRECTORY
+    chmod -R 777 /home/vagrant/build
     sudo -u vagrant composer create-project --no-install --no-progress --repository=https://repo.magento.com/ \
       magento/project-$EDITION-edition=2.3.0-$VERSION --stability=alpha $BUILD_DIRECTORY
     
