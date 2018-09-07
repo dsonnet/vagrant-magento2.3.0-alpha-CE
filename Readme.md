@@ -2,7 +2,7 @@
 
 ![magento 2.3.0-alpha](https://image.noelshack.com/fichiers/2018/36/5/1536313361-selection-014.png)
 
-A simple Vagrant Magento installation on Debian Stretch to take a look on Magento 2.3.*<br>
+A simple Vagrant Magento installation on Debian Stretch to take a look on Magento 2.3.0-alpha*<br>
 Setup is based on [magento documentation](https://devdocs.magento.com/guides/v2.3/release-notes/2.3.0-alpha-install.html)
 
 ## Requirements
