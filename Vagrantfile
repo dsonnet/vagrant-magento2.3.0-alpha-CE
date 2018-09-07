@@ -13,7 +13,7 @@ Vagrant.configure(2) do |conf|
 
   # mount
   conf.vm.synced_folder ".", "/vagrant", disabled: true
-  if config['mount'] == 'short'
+  if config['mount'] == 'app'
     conf.vm.synced_folder host_magento_dir + 'app/', guest_magento_dir + 'app/', create: true,
     :owner => "www-data", :group => "www-data", :mount_options => ["dmode=777", "fmode=777"]
   else
