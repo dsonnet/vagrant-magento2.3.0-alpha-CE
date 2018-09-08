@@ -260,6 +260,8 @@ if [[ -z $(grep "magento" "/home/vagrant/.bashrc") ]]; then
 cat <<EOF >> /home/vagrant/.bashrc
 # Shortcut to bin/magento
 alias magento='sudo -u www-data ${PROJECT_DIRECTORY}/bin/magento'
+# Log as www-data user
+sudo -s -u www-data
 EOF
 fi
 
